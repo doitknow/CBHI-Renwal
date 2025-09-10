@@ -1,12 +1,13 @@
 <template>
   <div class="min-h-screen flex flex-col items-center justify-start bg-white">
     <!-- Top Bar -->
-    <div class="w-full bg-lime-400 text-black flex justify-between items-center px-6 py-3 text-sm font-semibold">
-      <div class="flex items-center space-x-2 text-xs md:text-sm lg:text-lg ">
-        <span>🕒 MONDAY - SUNDAY, 24/7</span>
+    <div class="w-full bg-gradient-to-r from-lime-400  to-lime-400 text-black flex justify-between items-center px-8 py-3 text-base font-bold shadow-md">
+      <div class="flex items-center space-x-3 text-sm md:text-base ">
+        <span>🕒 | Monday - Sunday, 24/7</span>
       </div>
-      <div class="flex items-center space-x-2 text-xs md:text-sm lg:text-lg">
-        <span>☎️ (+251965914422)</span>
+      <div class="flex items-center space-x-3 text-sm md:text-base ">
+        <span>📞 (+251 965 914 422)</span>
+        <span class="hidden md:inline-block">|Ethiopia</span>
       </div>
     </div>
 
@@ -19,7 +20,7 @@
         <div class="relative inline-block text-left">
           <button 
             @click="toggleDropdown" 
-            class="bg-lime-400 text-black px-4 py-1  shadow font-semibold hover:bg-lime-500 transition"
+            class="bg-yellow-400 text-black px-4 py-1  shadow font-semibold hover:bg-lime-500 transition"
           >
             {{ selectedLang }}
           </button>
@@ -48,7 +49,7 @@
       <div class="relative z-10 flex flex-col items-center space-y-6">
         <!-- Logo/Title -->
         <h1 class="text-5xl font-extrabold text-lime-400">CBHI</h1>
-        <img src="/arrow.png" alt="Arrow" class="mx-auto  h-8" />
+        <img src="/arrow.png" alt="Arrow" class="mx-auto  h-9" />
         <h2 class="text-2xl font-bold">COMMUNITY BASED HEALTH INSURANCE</h2>
         <p class="text-lg max-w-2xl text-lime-300">
           Your gateway to secure, simplified, and inclusive health insurance services in Addis Ababa
@@ -58,7 +59,7 @@
         <div class="flex items-center bg-white rounded-full shadow px-4 py-2 w-150">
           <input 
             type="text" 
-            placeholder="search by CBHI ID" 
+            placeholder="search by CBHI ID to renew your membership" 
             v-model="searchId"
             class="flex-1 outline-none text-black placeholder-gray-500"
           />
@@ -77,12 +78,12 @@
  <div class="h-10 object-contain ml-4 mr-auto" >
      <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" class="h-10"
   />
-      <!-- <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store" class="h-14" /> -->
+      <img src="/appstore.png" alt="App Store" class="h-15" />
  </div>
     </div>
 
     <!-- Bottom Marquee with Logo Cards -->
-    <div class="w-full bg-yellow-200 py-6 mt-auto overflow-hidden">
+    <div class="w-full bg-yellow-100 py-6 mt-auto overflow-hidden">
       <div class="marquee flex space-x-30">
         <div v-for="n in 1" :key="n" class=" flex p-10  items-center justify-center">
           <img :src="`/Green-Logo.png`" alt="partner logo" class="h-16 w-35 object-contain" />
@@ -96,10 +97,13 @@
         <div v-for="n in 1" :key="n + 3" class=" flex items-center justify-center">
           <img :src="`/telebirr.png`" alt="partner logo" class="h-16 object-contain" />      </div>
           <div v-for="n in 1" :key="n + 4" class=" flex items-center justify-center">
-          <img :src="`/BankofAbyssinia.png`" alt="partner logo" class="h-16 object-contain" />
+          <img :src="`/BankofAbyssinia.png`" alt="partner logo" class="h-18 object-contain" />
         </div>
         <div v-for="n in 1" :key="n + 5" class=" flex items-center justify-center">
           <img :src="`/anbessabank.png`" alt="partner logo" class="h-16 object-contain" />
+        </div>
+        <div v-for="n in 1" :key="n + 6" class=" flex items-center justify-center">
+          <img :src="`/Chapa.png`" alt="partner logo" class="h-16 object-contain" />
         </div>
 
           
@@ -161,7 +165,7 @@ body {
   overflow: hidden;
 }
 
-.bg-slide::after {
+/* .bg-slide::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -173,7 +177,7 @@ body {
   animation: fadePeople 20s linear infinite;
   transition: opacity 1s;
   z-index: 1;
-}
+} */
 
 @keyframes bgMove {
   0% { background-position: 0% 50%; }
