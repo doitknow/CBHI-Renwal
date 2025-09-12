@@ -85,9 +85,9 @@ const goToPayment = () => {
 
 <style>
 .bg-primary {
-  background-color: #2563eb;
+  background-color: #46eb25;
 }
 .text-primary {
-  color: #2563eb;
+  color: #32eb25;
 }
 </style>
