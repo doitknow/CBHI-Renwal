@@ -64,28 +64,17 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref } from "vue";
-import { SearchApi } from "../api/searchIdBy";
 import { useRouter } from "vue-router";
+import { SearchApi } from "../api/searchIdBy";
 import { translations, lang, setLang } from "../i18n.js";
 
 const router = useRouter();
 const searchId = ref("");
 const isDropdownOpen = ref(false);
-const selectedLang = ref("🌐 Language");
 
-const logos = [
-  { src: "/ehis.png", alt: "partner logo" },
-  { src: "/Green-Logo.png", alt: "partner logo" },
-  
-  { src: "/mpesas.png", alt: "partner logo" },
-  { src: "/telebirr.png", alt: "partner logo" },
-  { src: "/BankofAbyssinia.png", alt: "partner logo" },
-  { src: "/anbessabank.png", alt: "partner logo" },
-  { src: "/Chapa.png", alt: "partner logo" },
-];
+const selectedLang = ref(lang.value.toUpperCase());
 
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
@@ -102,7 +91,6 @@ const searchUser = async () => {
     alert("Please enter CBHI ID");
     return;
   }
-
   try {
     const result = await SearchApi.searchUserById(searchId.value);
     const user = result.user;
@@ -115,15 +103,10 @@ const searchUser = async () => {
 };
 
 const t = (key) => {
-  if (translations[lang.value] && translations[lang.value][key]) {
-    return translations[lang.value][key];
-  } else if (translations.en && translations.en[key]) {
-    return translations.en[key];
-  } else {
-    return key;
-  }
+  return translations[lang.value]?.[key] || translations.en[key] || key;
 };
 </script>
+
 <style>
 body {
   font-family: 'Inter', sans-serif;
