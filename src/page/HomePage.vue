@@ -48,22 +48,10 @@
           </button>
         </div>
 
-        <!-- App Store Buttons as clickable buttons -->
+        <!-- App Store Buttons -->
         <div class="flex space-x-6 my-12">
-          <button
-            class="focus:outline-none"
-            @click="window.open('https://play.google.com/store', '_blank')"
-            aria-label="Get it on Google Play"
-          >
-            <a href="https://play.google.com/store"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" class="h-10" /></a>
-          </button>
-          <button
-            class="focus:outline-none"
-            @click="window.open('https://www.apple.com/app-store/', '_blank')"
-            aria-label="Download on the App Store"
-          >
-            <img src="/appstore.png" alt="App Store" class="h-15" />
-          </button>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" class="h-10" />
+          <img src="/appstore.png" alt="App Store" class="h-15" />
         </div>
       </div>
     </div>
@@ -77,12 +65,7 @@
   </div>
 </template>
 <script setup>
-<<<<<<< HEAD
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import { SearchApi } from "../api/searchIdBy";
-=======
 import { ref } from "vue";
->>>>>>> 36e413876368adf47a36eff73bc785bc2745f846
 import { useRouter } from "vue-router";
 import { SearchApi } from "../api/searchIdBy";
 import { translations, lang, setLang } from "../i18n.js";
@@ -92,22 +75,6 @@ const searchId = ref("");
 const isDropdownOpen = ref(false);
 
 const selectedLang = ref(lang.value.toUpperCase());
-
-const bgImages = [
-  "/family.png",
-  "/chbiuser.png"
-];
-const currentBgIndex = ref(0);
-let intervalId = null;
-
-onMounted(() => {
-  intervalId = setInterval(() => {
-    currentBgIndex.value = (currentBgIndex.value + 1) % bgImages.length;
-  }, 4000);
-});
-onBeforeUnmount(() => {
-  clearInterval(intervalId);
-});
 
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
@@ -128,15 +95,14 @@ const searchUser = async () => {
     const result = await SearchApi.searchUserById(searchId.value);
     const user = result.user;
     const name = encodeURIComponent(user.firstName + " " + user.fathersName + " " + user.grandFathersName);
-
-    router.push(`/renewal/${user.id}/${name}`);
+    router.push(/renewal/${user.id}/${name});
   } catch (err) {
-    alert(err.message || "Something went wrong");
+    alert(err.message  "Something went wrong");
   }
 };
 
 const t = (key) => {
-  return translations[lang.value]?.[key] || translations.en[key] || key;
+  return translations[lang.value]?.[key]  translations.en[key] || key;
 };
 </script>
 
