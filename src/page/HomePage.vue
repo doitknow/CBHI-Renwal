@@ -48,10 +48,22 @@
           </button>
         </div>
 
-        <!-- App Store Buttons -->
+        <!-- App Store Buttons as clickable buttons -->
         <div class="flex space-x-6 my-12">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" class="h-10" />
-          <img src="/appstore.png" alt="App Store" class="h-15" />
+          <button
+            class="focus:outline-none"
+            @click="window.open('https://play.google.com/store', '_blank')"
+            aria-label="Get it on Google Play"
+          >
+            <a href="https://play.google.com/store"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" class="h-10" /></a>
+          </button>
+          <button
+            class="focus:outline-none"
+            @click="window.open('https://www.apple.com/app-store/', '_blank')"
+            aria-label="Download on the App Store"
+          >
+            <img src="/appstore.png" alt="App Store" class="h-15" />
+          </button>
         </div>
       </div>
     </div>
@@ -66,7 +78,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { SearchApi } from "../api/searchIdBy";
 import { useRouter } from "vue-router";
 
@@ -85,6 +97,22 @@ const logos = [
   { src: "/anbessabank.png", alt: "partner logo" },
   { src: "/Chapa.png", alt: "partner logo" },
 ];
+
+const bgImages = [
+  "/family.png",
+  "/chbiuser.png"
+];
+const currentBgIndex = ref(0);
+let intervalId = null;
+
+onMounted(() => {
+  intervalId = setInterval(() => {
+    currentBgIndex.value = (currentBgIndex.value + 1) % bgImages.length;
+  }, 4000);
+});
+onBeforeUnmount(() => {
+  clearInterval(intervalId);
+});
 
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
