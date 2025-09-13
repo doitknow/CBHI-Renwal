@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import FeeRow from "./FeeRow.vue";
@@ -17,11 +17,11 @@ const fees = ref(
 const installmentsTotal = computed(() => {
   const f = fees.value;
   return (
-    (Number(f.registrationFee) || 0) +
-    (Number(f.insuredFee) || 0) +
-    (Number(f.dependantsFee) || 0) +
-    (Number(f.penaltyFee) || 0) +
-    (Number(f.otherFee) || 0)
+    (Number(f.registrationFee)  0) +
+    (Number(f.insuredFee)  0) +
+    (Number(f.dependantsFee)  0) +
+    (Number(f.penaltyFee)  0) +
+    (Number(f.otherFee)  0)
   );
 });
 
@@ -47,7 +47,7 @@ const goToPayment = () => {
         <div class="flex justify-between items-center mb-6">
           <div>
             <p class="text-gray-500 text-sm font-medium">Household Head</p>
-            <p class="text-xl font-bold text-primary">{{ user.fullName || "N/A" }}</p>
+            <p class="text-xl font-bold text-primary">{{ user.fullName  "N/A" }}</p>
           </div>
           <span class="bg-orange-500 text-white text-sm font-semibold px-4 py-1.5 rounded-full">
             Waiting
@@ -55,10 +55,10 @@ const goToPayment = () => {
         </div>
 
         <div class="space-y-4">
-          <FeeRow label="Renewal Fee" :value="'ETB ' + (Number(fees.registrationFee) || 0).toFixed(2)" />
-          <FeeRow label="Insured Fee" :value="'ETB ' + (Number(fees.insuredFee) || 0).toFixed(2)" />
-          <FeeRow label="Dependants Fee" :value="'ETB ' + (Number(fees.dependantsFee) || 0).toFixed(2)" />
-          <FeeRow label="Penalty Fee" :value="'ETB ' + (Number(fees.penaltyFee) || 0).toFixed(2)" />
+          <FeeRow label="Renewal Fee" :value="'ETB ' + (Number(fees.registrationFee)  0).toFixed(2)" />
+          <FeeRow label="Insured Fee" :value="'ETB ' + (Number(fees.insuredFee)  0).toFixed(2)" />
+          <FeeRow label="Dependants Fee" :value="'ETB ' + (Number(fees.dependantsFee)  0).toFixed(2)" />
+          <FeeRow label="Penalty Fee" :value="'ETB ' + (Number(fees.penaltyFee)  0).toFixed(2)" />
           <FeeRow label="Other Fee" :value="'ETB ' + (Number(fees.otherFee) || 0).toFixed(2)" />
 
           <hr class="my-4 border-gray-200" />
@@ -85,9 +85,9 @@ const goToPayment = () => {
 
 <style>
 .bg-primary {
-  background-color: #46eb25;
+  background-color: #2563eb;
 }
 .text-primary {
-  color: #32eb25;
+  color: #2563eb;
 }
-</style>
+</style> -->

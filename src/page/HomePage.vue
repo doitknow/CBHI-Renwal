@@ -12,7 +12,7 @@
     </div>
 
     <!-- Background with image overlay -->
-    <div class="relative w-full h-[74vh] flex flex-col items-center justify-center text-center text-white bg-slide">
+    <div class="relative w-full h-[80vh] flex flex-col items-center justify-center text-center text-white bg-slide">
       <!-- Dropdown Lang Button -->
       <div class="absolute top-4 right-4">
         <div class="relative inline-block text-left">
@@ -28,9 +28,9 @@
 
       <!-- Content -->
       <div class="relative z-10 flex flex-col items-center space-y-6">
-        <h1 class="text-5xl font-extrabold text-lime-400">{{ t("cbhi") }}</h1>
-        <img src="/arrow.png" alt="Arrow" class="mx-auto h-9" />
-        <h2 class="text-2xl font-bold">{{ t("cbhiFull") }}</h2>
+        <!-- <h1 class="text-5xl font-extrabold text-blue-500">CBHI</h1> -->
+        <h1><img src="/cbhirenew.png" alt="Arrow" class="mx-auto h-20" /></h1>
+        <h2 class="text-2xl font-bold">COMMUNITY BASED HEALTH INSURANCE</h2>
         <p class="text-lg max-w-2xl text-lime-300">
           {{ t("cbhiDesc") }}
         </p>
@@ -49,15 +49,15 @@
         </div>
 
         <!-- App Store Buttons -->
-        <div class="flex space-x-6 my-10">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" :alt="t('downloadGoogle')" class="h-10" />
-          <img src="/appstore.png" :alt="t('downloadApple')" class="h-10" />
+        <div class="flex space-x-6 my-12">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" class="h-10" />
+          <img src="/appstore.png" alt="App Store" class="h-15" />
         </div>
       </div>
     </div>
 
     <!-- Bottom Marquee -->
-    <div class="w-full bg-yellow-100 py-6 mt-auto overflow-hidden">
+    <div class="w-full bg-yellow-100 py-7 mt-auto overflow-hidden">
       <div class="marquee flex space-x-20">
         <img v-for="logo in logos" :key="logo.src" :src="logo.src" :alt="logo.alt" class="h-16 object-contain" />
       </div>
@@ -74,11 +74,12 @@ import { translations, lang, setLang } from "../i18n.js";
 const router = useRouter();
 const searchId = ref("");
 const isDropdownOpen = ref(false);
-const selectedLang = ref(lang.value.toUpperCase());
+const selectedLang = ref("🌐 Language");
 
 const logos = [
+  { src: "/ehis.png", alt: "partner logo" },
   { src: "/Green-Logo.png", alt: "partner logo" },
-  { src: "/cbe.png", alt: "partner logo" },
+  
   { src: "/mpesas.png", alt: "partner logo" },
   { src: "/telebirr.png", alt: "partner logo" },
   { src: "/BankofAbyssinia.png", alt: "partner logo" },
