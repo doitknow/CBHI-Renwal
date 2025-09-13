@@ -5,12 +5,12 @@
     <div class="bg-white/5 backdrop-blur-xl text-white p-8 rounded-2xl w-full max-w-sm text-center shadow-2xl border border-white/20">
       <!-- Icon -->
       <div class="mb-4">
-       <img src="/cbhirenew.png" alt="Verification Icon" class="mx-auto w-20 h-16" />
+        <img src="/cbhirenew.png" alt="Verification Icon" class="mx-auto w-20 h-16" />
       </div>
 
       <!-- Title -->
-      <h2 class="text-xl font-bold mb-2">Verification Code</h2>
-      <p class="text-gray-200 mb-6">Enter the 6-digit code we've sent to ******1958</p>
+      <h2 class="text-xl font-bold mb-2">{{ t("verificationCode") }}</h2>
+      <p class="text-gray-200 mb-6">{{ t("enterCodeMsg") }}</p>
 
       <!-- Code Inputs -->
       <div class="flex justify-between mb-6 space-x-2">
@@ -25,19 +25,19 @@
 
       <!-- Resend link -->
       <p class="text-gray-300 mb-6">
-        Didn’t get the code? 
-        <button @click="resendCode" class="underline text-primary">Click to resend</button>
+        {{ t("noCode") }}  
+        <button @click="resendCode" class="underline text-primary">{{ t("resendCode") }}</button>
       </p>
 
       <!-- Buttons -->
       <div class="flex space-x-4">
         <button @click="cancel" 
                 class="flex-1 py-2 bg-white/20 border border-white/30 text-white rounded-lg font-semibold hover:bg-white/30 transition">
-          Cancel
+          {{ t("cancel") }}
         </button>
         <button @click="verifyCode" 
-                class="flex-1 py-2 bg-blue-500 text-white rounded-lg font-semibold bg-primary transition">
-          Verify
+                class="flex-1 py-2 bg-primary text-white rounded-lg font-semibold transition">
+          {{ t("verify") }}
         </button>
       </div>
     </div>
@@ -46,6 +46,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { t } from "../i18n.js";
 
 const emit = defineEmits(["close"]);
 
@@ -59,7 +60,7 @@ const focusNext = (index, event) => {
 };
 
 const resendCode = () => {
-  alert("Verification code resent!");
+  alert(t("resendCodeAlert"));
 };
 
 const cancel = () => {
@@ -68,20 +69,16 @@ const cancel = () => {
 
 const verifyCode = () => {
   const enteredCode = code.value.join("");
-  alert(`Code entered: ${enteredCode}`);
+  alert(`${t("codeEntered")} ${enteredCode}`);
   emit("close"); // close after verification
 };
 </script>
+
 <style scoped>  
 .bg-primary {
   background-color: #6C9448;
 }
 .text-primary {
   color: #f79120;
-  
-}
-.colororange{
-  color: #f79120
-
 }
 </style>

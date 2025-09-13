@@ -45,6 +45,14 @@ export const translations = {
     securePayment: "Secure payment through your account",
     AMH: "Amharic",
     COMMUNITY_BASED_HEALTH_INSURANCE: "COMMUNITY BASED HEALTH INSURANCE",
+    verificationCode: "Verification Code",
+    enterCodeMsg: "Enter the 6-digit code we've sent to ******1958",
+    noCode: "Didn’t get the code?",
+    resendCode: "Click to resend",
+    resendCodeAlert: "Verification code resent!",
+    cancel: "Cancel",
+    verify: "Verify",
+    codeEntered: "Code entered:",
   },
   አማ: {
     hours: "🕒 | ሰኞ - እሑድ፣ 24/7",
@@ -79,6 +87,14 @@ export const translations = {
     securePayment: "በመለያዎ አካውንት የተጠበቀ ክፍያ",
     Ethiopia: "ኢትዮጵያ",
     COMMUNITY_BASED_HEALTH_INSURANCE: "ማህበረሰብ አቀፍ የጤና መድን",
+    verificationCode: "የማረጋገጫ ኮድ",
+    enterCodeMsg: "ወደ ******1958 የተላከውን 6-አሃዝ ኮድ ያስገቡ",
+    noCode: "ኮዱን አላገኙም?",
+    resendCode: "ደግመው ይላኩ",
+    resendCodeAlert: "የማረጋገጫ ኮድ ተልኳል!",
+    cancel: "ይቅር",
+    verify: "አረጋግጥ",
+    codeEntered: "ያስገቡት ኮድ፦",
   },
   oro: {
   hours: "🕒 | Wiixata - Dilbata, 24/7",
@@ -115,6 +131,14 @@ export const translations = {
   AMH: "Afaan Oromoo",
   Ethiopia: "Itoophiyaa",
   COMMUNITY_BASED_HEALTH_INSURANCE: "Tajaajila Inshuraansii Fayyaa Hawaasummaa (CBHI)",
+   verificationCode: "Koodii Mirkaneessaa",
+    enterCodeMsg: "Koodii lakkoofsa 6 ta’e gara ******1958’n ergame galchi",
+    noCode: "Koodiin hin dhufne?",
+    resendCode: "Irra deebi'ii ergi",
+    resendCodeAlert: "Koodiin mirkaneessaa ergame!",
+    cancel: "Haqi",
+    verify: "Mirkaneessi",
+    codeEntered: "Koodiin galfame:"
 }
 
 };
