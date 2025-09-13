@@ -3,11 +3,11 @@
     <!-- Top Bar -->
     <div class="w-full bg-gradient-to-r from-lime-400 to-lime-400 text-black flex justify-between items-center px-8 py-3 text-base font-bold shadow-md">
       <div class="flex items-center space-x-3 text-sm md:text-base">
-        <span>🕒 | Monday - Sunday, 24/7</span>
+        <span>{{ t("hours") }}</span>
       </div>
       <div class="flex items-center space-x-3 text-sm md:text-base">
-        <span>📞 (+251 965 914 422)</span>
-        <span class="hidden md:inline-block">| Ethiopia</span>
+        <span>{{ t("phone") }}</span>
+        <span class="hidden md:inline-block">| {{ t("country") }}</span>
       </div>
     </div>
 
@@ -20,8 +20,8 @@
             {{ selectedLang }}
           </button>
           <div v-if="isDropdownOpen" class="absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg z-20">
-            <button @click="setLang('ENG')" class="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100">ENG</button>
-            <button @click="setLang('AMH')" class="block w-full text-left px-4 py-2 text-green-600 hover:bg-gray-100">AMH</button>
+            <button @click="setLangHandler('en')" class="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100">ENG</button>
+            <button @click="setLangHandler('am')" class="block w-full text-left px-4 py-2 text-green-600 hover:bg-gray-100">AMH</button>
           </div>
         </div>
       </div>
@@ -32,19 +32,19 @@
         <h1><img src="/cbhirenew.png" alt="Arrow" class="mx-auto h-20" /></h1>
         <h2 class="text-2xl font-bold">COMMUNITY BASED HEALTH INSURANCE</h2>
         <p class="text-lg max-w-2xl text-lime-300">
-          Your gateway to secure, simplified, and inclusive health insurance services in Addis Ababa
+          {{ t("cbhiDesc") }}
         </p>
 
         <!-- Search Box -->
         <div class="flex items-center bg-white rounded-full shadow px-4 py-2 w-150">
           <input 
             type="text" 
-            placeholder="Search by CBHI ID to renew your membership" 
+            :placeholder="t('searchPlaceholder')" 
             v-model="searchId"
             class="flex-1 outline-none text-black placeholder-gray-500"
           />
           <button @click="searchUser" class="ml-2 bg-lime-400 px-4 py-1 rounded-full text-black font-semibold hover:bg-lime-500 transition">
-            Search
+            {{ t("searchBtn") }}
           </button>
         </div>
 
@@ -76,27 +76,22 @@
     </div>
   </div>
 </template>
-
 <script setup>
+<<<<<<< HEAD
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { SearchApi } from "../api/searchIdBy";
+=======
+import { ref } from "vue";
+>>>>>>> 36e413876368adf47a36eff73bc785bc2745f846
 import { useRouter } from "vue-router";
+import { SearchApi } from "../api/searchIdBy";
+import { translations, lang, setLang } from "../i18n.js";
 
 const router = useRouter();
 const searchId = ref("");
 const isDropdownOpen = ref(false);
-const selectedLang = ref("🌐 Language");
 
-const logos = [
-  { src: "/ehis.png", alt: "partner logo" },
-  { src: "/Green-Logo.png", alt: "partner logo" },
-  
-  { src: "/mpesas.png", alt: "partner logo" },
-  { src: "/telebirr.png", alt: "partner logo" },
-  { src: "/BankofAbyssinia.png", alt: "partner logo" },
-  { src: "/anbessabank.png", alt: "partner logo" },
-  { src: "/Chapa.png", alt: "partner logo" },
-];
+const selectedLang = ref(lang.value.toUpperCase());
 
 const bgImages = [
   "/family.png",
@@ -118,8 +113,9 @@ const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
 };
 
-const setLang = (lang) => {
-  selectedLang.value = lang;
+const setLangHandler = (l) => {
+  setLang(l);
+  selectedLang.value = l.toUpperCase();
   isDropdownOpen.value = false;
 };
 
@@ -128,7 +124,6 @@ const searchUser = async () => {
     alert("Please enter CBHI ID");
     return;
   }
-
   try {
     const result = await SearchApi.searchUserById(searchId.value);
     const user = result.user;
@@ -138,9 +133,11 @@ const searchUser = async () => {
   } catch (err) {
     alert(err.message || "Something went wrong");
   }
-    
 };
 
+const t = (key) => {
+  return translations[lang.value]?.[key] || translations.en[key] || key;
+};
 </script>
 
 <style>
