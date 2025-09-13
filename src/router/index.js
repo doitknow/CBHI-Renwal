@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../page/HomePage.vue";          // your main search page
 import RenewalAmount from "../page/Renewal.vue";      // your Renewal component
 import Payment from "../page/Payment.vue";
+import Verification from "../page/verification.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path:"/payment",
     name: "Payment",
     component:Payment
+  },
+  {
+    path: "/verify",
+    name: "verification",
+    component: Verification
   }
 ];
 

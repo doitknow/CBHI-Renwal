@@ -1,17 +1,64 @@
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen bg-gray-100 relative">
     <!-- Navbar -->
     <header class="bg-primary text-white shadow-md">
       <div class="container mx-auto flex justify-between items-center py-4 px-6">
-        <h1><img src="/cbhirenew.png" alt="Arrow" class="mx-auto h-8" /></h1>
+        <h1>
+          <img src="/cbhirenew.png" alt="Arrow" class="mx-auto h-8" />
+        </h1>
       </div>
     </header>
+
+    <!-- Dropdown Lang Button -->
+    <div class="absolute top-4 right-4">
+      <div class="relative inline-block text-left">
+        <button 
+          @click="toggleDropdown" 
+          class="colororange text-black px-4 py-1 shadow font-semibold hover:bg-lime-500 transition flex items-center space-x-2"
+        >
+          <!-- Globe Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" 
+               class="h-5 w-5 text-current"
+               fill="none" 
+               viewBox="0 0 24 24" 
+               stroke="currentColor"
+               stroke-width="2">
+            <path stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9z" />
+            <path stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  d="M2.05 12h19.9M12 2.05a15.91 15.91 0 010 19.9M12 2.05a15.91 15.91 0 000 19.9" />
+          </svg>
+
+          <span>{{ selectedLang }}</span>
+
+          <!-- Dropdown Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" 
+               class="h-4 w-4 text-current transition-transform duration-200"
+               :class="{ 'rotate-180': isDropdownOpen }"
+               fill="none" 
+               viewBox="0 0 24 24" 
+               stroke="currentColor">
+            <path stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  stroke-width="2" 
+                  d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div v-if="isDropdownOpen" class="absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg z-20">
+          <button @click="setLangHandler('en')" class="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100">ENG</button>
+          <button @click="setLangHandler('አማ')" class="block w-full text-left px-4 py-2 text-green-600 hover:bg-gray-100">አማ</button>
+          <button @click="setLangHandler('oro')" class="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100">ORO</button>
+        </div>
+      </div>
+    </div>
 
     <!-- Content -->
     <main class="container mx-auto px-9 py-15">
       <h2 class="text-2xl font-bold text-primary mb-6">{{ t("completePayment") }}</h2>
-
-      <!-- Dropdown Lang Button (unchanged) -->
 
       <!-- Payment Card -->
       <div class="bg-green rounded-2xl shadow-lg p-8 md:p-10 mb-10">
@@ -35,17 +82,14 @@
               class="flex-1 px-4 py-3 outline-none text-gray-700"
             />
           </div>
-          <p v-if="accountName" class="mt-2 text-green-600 font-semibold">
-            {{ t("accountFound") }}: {{ accountName }}
-          </p>
+          <p v-if="accountError" class="text-red-500 text-sm mt-2">{{ accountError }}</p>
         </div>
 
         <!-- Pay Button -->
         <div class="mt-8">
           <button
-            @click="makePayment"
+            @click="handlePayNow"
             class="w-full py-3 text-lg font-bold text-white rounded-full bg-primary hover:opacity-90 transition"
-            :disabled="!accountName"
           >
             {{ t("payNow") }}
           </button>
@@ -57,14 +101,14 @@
         {{ t("selectPaymentMethod") }}
       </h3>
 
-      <!-- Centered 2 Payment Option Buttons -->
+      <!-- Payment Options -->
       <div class="flex justify-center mb-10">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button
             class="bg-white rounded-xl shadow p-3 flex flex-col items-center hover:bg-lime-100 transition border-2 border-green-400 animate-card w-72 md:w-96"
             @click="goToChapa"
           >
-            <img src="/Chapa.png" alt="Chapa" class="w-20 h-20 mb-2" />
+            <img src="/Chapa.png" alt="Chapa" class="w-35 h-20 mb-2" />
             <p class="text-gray-500 text-xs mt-1">{{ t("payWithChapa") }}</p>
           </button>
           <button
@@ -77,17 +121,25 @@
         </div>
       </div>
     </main>
+
+    <!-- ✅ Popup Verification -->
+    <div v-if="showVerification" class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
+      <Verification @close="showVerification = false" />
+    </div>
   </div>
 </template>
+
 <script setup>
 import { ref } from "vue";
 import { lang, setLang, t } from "../i18n.js";
+import Verification from "./verification.vue";
 
 const accountNumber = ref("");
 const accountName = ref("");
-
 const selectedLang = ref(lang.value.toUpperCase());
 const isDropdownOpen = ref(false);
+const showVerification = ref(false);
+const accountError = ref("");
 
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
@@ -99,27 +151,35 @@ const setLangHandler = (l) => {
   isDropdownOpen.value = false;
 };
 
-// Fake search
-const searchAccount = () => {
-  if (accountNumber.value === "123456") {
-    accountName.value = "John Doe - Sinqee Bank";
-  } else {
-    accountName.value = "";
-    alert("Account not found! Please check the number.");
-  }
-};
-
-// Fake payment
-const makePayment = () => {
-  alert(`${t("payNow")} ${accountName.value}...`);
-};
-
 const goToChapa = () => {
   alert(t("payWithChapa"));
 };
-</script>
 
-<style>
+const handlePayNow = () => {
+  // Only allow numbers and at least 6 digits
+  if (!/^\d{13}$/.test(accountNumber.value)) {
+    accountError.value = "Account number must be 13 digits and numeric.";
+    return;
+  }
+  accountError.value = "";
+  showVerification.value = true;
+};
+</script>
+<style >
+@keyframes card {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.animate-card {
+  animation: card 3s ease-in-out infinite;
+}
 .bg-primary {
   background-color: #6C9448;
 }
@@ -127,28 +187,8 @@ const goToChapa = () => {
   color: #f79120;
   
 }
+.colororange{
+  color: #f79120
 
-/* Card entrance animation */
-@keyframes cardIn {
-  0% {
-    opacity: 0;
-    transform: translateY(40px) scale(0.95);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(-8px) scale(1.03);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
 }
-.animate-card {
-  animation: cardIn 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-  /* Optional: stagger effect for grid children */
-}
-.animate-card:nth-child(1) { animation-delay: 0.1s; }
-.animate-card:nth-child(2) { animation-delay: 0.2s; }
-.animate-card:nth-child(3) { animation-delay: 0.3s; }
-.animate-card:nth-child(4) { animation-delay: 0.4s; }
 </style>

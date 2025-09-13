@@ -15,7 +15,7 @@ export const setLang = (l) => {
 export const translations = {
   en: {
     hours: "🕒 | Monday - Sunday, 24/7",
-    phone: "📞 (+251 965 914 422)",
+    phone: "📞 (+251 901525354)",
     cbhi: "CBHI",
     cbhiFull: "COMMUNITY BASED HEALTH INSURANCE",
     cbhiDesc: "Your gateway to secure, simplified, and inclusive health insurance services in Addis Ababa",
@@ -43,38 +43,82 @@ export const translations = {
     payWithChapa: "Pay with Chapa",
     payWithSiinqee: "Pay with Siinqee",
     securePayment: "Secure payment through your account",
+    AMH: "Amharic",
+    COMMUNITY_BASED_HEALTH_INSURANCE: "COMMUNITY BASED HEALTH INSURANCE",
   },
-  am: {
+  አማ: {
     hours: "🕒 | ሰኞ - እሑድ፣ 24/7",
-    phone: "📞 (+251 965 914 422)",
+    phone: "📞 (+251 901525354)",
     cbhi: "ማህበረሰብ ተደጋጋሚ ጤና ኢንሹራንስ",
     cbhiFull: "Community Based Health Insurance",
     cbhiDesc: "በአዲስ አበባ የሚገኝ ቀላል እና ማህበረሰብ የተመሰረተ ጤና ኢንሹራንስ",
     searchPlaceholder: "በCBHI መታወቂያ ቁጥር በመፈለግ እንደገና ይቀጥሉ",
     searchBtn: "ፈልግ",
+    AMH: "አማርኛ",
+    Ethiopia: "Ethiopia",
 
     // Renewal page
-    renewalDetails: "የእንደገና መረጃ",
-    householdHead: "የቤተሰብ አለቃ",
+    renewalDetails: "የእድሳት መረጃ",
+    householdHead: "አባውራ",
     amount: "መጠን",
-    renewalFee: "የእንደገና ክፍያ",
+    renewalFee: "የእድሳት ክፍያ",
     insuredFee: "የተከላከለ ክፍያ",
     dependantsFee: "የተጨማሪ አባላት ክፍያ",
     penaltyFee: "ቅጣት ክፍያ",
     otherFee: "ሌሎች ክፍያዎች",
     totalPayment: "ጠቅላላ ክፍያ",
-    renewBtn: "እንደገና ክፈል",
+    renewBtn: "የእድሳት ክፈል",
      completePayment: "ክፍያዎን ያሟሉ",
     accountNumber: "የመለያ ቁጥር",
     enterAccountNumber: "የመለያ ቁጥርዎን ያስገቡ",
     accountFound: "✅ መለያ ተገኝቷል",
     payNow: "አሁን ክፈል",
     selectPaymentMethod: "የክፍያ መንገድ ይምረጡ",
-    payWithChapa: "በChapa ክፍያ ይከናወኑ",
-    payWithSiinqee: "በSiinqee ክፍያ ይከናወኑ",
+    payWithChapa: "በChapa ክፍያ ያከናወኑ",
+    payWithSiinqee: "በSiinqee ባንክ ክፍያ ያከናወኑ",
     securePayment: "በመለያዎ አካውንት የተጠበቀ ክፍያ",
-  }
+    Ethiopia: "ኢትዮጵያ",
+    COMMUNITY_BASED_HEALTH_INSURANCE: "ማህበረሰብ አቀፍ የጤና መድን",
+  },
+  oro: {
+  hours: "🕒 | Wiixata - Dilbata, 24/7",
+  phone: "📞 (+251 901525354)",
+  cbhi: "Tajaajila Fayyaa Hawaasaa (CBHI)",
+  cbhiFull: "Community Based Health Insurance",
+  cbhiDesc: "Balbala keessan fayyaa eegumsa, salphaa fi hirmaachisaa ta’eef Finfinnee keessatti",
+  searchPlaceholder: "Maamiloota keessan haaromsuuf ID CBHI’n barbaadi",
+  searchBtn: "Barbaadi",
+  AMH: "Afaan Amaaraa",
+  Ethiopia: "Itoophiyaa",
+
+  // Renewal page
+  renewalDetails: "Odeeffannoo Haaromsaa",
+  householdHead: "Mataa Maatii",
+  amount: "Hammamtaa",
+  renewalFee: "Mindaa Haaromsaa",
+  insuredFee: "Mindaa Inshuraansii",
+  dependantsFee: "Mindaa Itti-fuufamtootaa",
+  penaltyFee: "Mindaa Adabbii",
+  otherFee: "Kaffaltii biroo",
+  totalPayment: "Waliigala Kaffaltii",
+  renewBtn: "Haaromsi",
+
+  completePayment: "Kaffaltii kee xumuri",
+  accountNumber: "Lakkoofsa Herregaa",
+  enterAccountNumber: "Lakkoofsa herregaa kee galchi",
+  accountFound: "✅ Herrega argame",
+  payNow: "Amma kaffali",
+  selectPaymentMethod: "Toofta Kaffaltii filadhu",
+  payWithChapa: "Chapa’n kaffali",
+  payWithSiinqee: "Siinqee’n kaffali",
+  securePayment: "Kaffaltii nageenyaan herrega kee irra",
+  AMH: "Afaan Oromoo",
+  Ethiopia: "Itoophiyaa",
+  COMMUNITY_BASED_HEALTH_INSURANCE: "Tajaajila Inshuraansii Fayyaa Hawaasummaa (CBHI)",
+}
+
 };
+
 
 // ✅ Helper function
 export const t = (key) => {
