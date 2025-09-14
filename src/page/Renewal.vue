@@ -55,8 +55,8 @@ const fetchUserData = async (userId) => {
     user.value.id = userId;
     const result = await InstallmentSummary.getInstallments(userId);
     fees.value = {
-      registrationFee: Number(result.registrationFee),
-      insuredFee: Number(result.insuredFee),
+      registrationFee: Number(result.registrationFee) || 0,
+      insuredFee: Number(result.insuredFee) || 0,
       dependantsFee: Number(result.dependantsFee) || 0,
       penaltyFee: Number(result.penaltyFee) || 0,
       otherFee: Number(result.otherFee) || 0,
@@ -82,13 +82,73 @@ const goToPayment = () => {
 };
 </script>
 
-
 <template>
   <div class="min-h-screen bg-gray-100">
     <header class="gn-primary text-white shadow-md">
       <div class="container mx-auto flex justify-between items-center py-4 px-6">
         <h1><img src="/cbhirenew.png" alt="Arrow" class="mx-auto h-9" /></h1>
-        <!-- Lang dropdown (unchanged) -->
+        
+         <!-- Dropdown Lang Button -->
+ <div class="absolute top-4 right-4">
+  <div class="relative inline-block text-left">
+    <button 
+      @click="toggleDropdown" 
+      class="colororange text-black px-4 py-1 shadow font-semibold hover:bg-lime-500 transition flex items-center space-x-2"
+    >
+      <!-- Language (Globe) Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" 
+           class="h-5 w-5 text-current"
+           fill="none" 
+           viewBox="0 0 24 24" 
+           stroke="currentColor"
+           stroke-width="2">
+        <path stroke-linecap="round" 
+              stroke-linejoin="round" 
+              d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9z" />
+        <path stroke-linecap="round" 
+              stroke-linejoin="round" 
+              d="M2.05 12h19.9M12 2.05a15.91 15.91 0 010 19.9M12 2.05a15.91 15.91 0 000 19.9" />
+      </svg>
+
+      <span>{{ selectedLang }}</span>
+
+      <!-- Dropdown Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" 
+           class="h-4 w-4 text-current transition-transform duration-200"
+           :class="{ 'rotate-180': isDropdownOpen }"
+           fill="none" 
+           viewBox="0 0 24 24" 
+           stroke="currentColor">
+        <path stroke-linecap="round" 
+              stroke-linejoin="round" 
+              stroke-width="2" 
+              d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+
+    <!-- Dropdown Menu -->
+    <div 
+      v-if="isDropdownOpen" 
+      class="absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg z-20"
+    >
+      <button 
+        @click="setLangHandler('en')" 
+        class="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100"
+      >ENG</button>
+
+      <button 
+        @click="setLangHandler('አማ')" 
+        class="block w-full text-left px-4 py-2 text-green-600 hover:bg-gray-100"
+      >አማ</button>
+
+      <button 
+        @click="setLangHandler('oro')" 
+        class="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100"
+      >ORO</button>
+    </div>
+  </div>
+</div>
+
       </div>
     </header>
 
@@ -107,11 +167,11 @@ const goToPayment = () => {
         </div>
 
         <div class="space-y-4">
-          <FeeRow label="renewalFee" :value="'ETB ' + (fees.registrationFee || 0).toFixed(2)" />
-          <FeeRow label="insuredFee" :value="'ETB ' + (fees.insuredFee || 0).toFixed(2)" />
-          <FeeRow label="dependantsFee" :value="'ETB ' + (fees.dependantsFee || 0).toFixed(2)" />
-          <FeeRow label="penaltyFee" :value="'ETB ' + (fees.penaltyFee || 0).toFixed(2)" />
-          <FeeRow label="otherFee" :value="'ETB ' + (fees.otherFee || 0).toFixed(2)" />
+          <FeeRow label="renewalFee" :value="'ETB ' + ((fees.registrationFee || 0).toFixed(2))" />
+          <FeeRow label="insuredFee" :value="'ETB ' + ((fees.insuredFee || 0).toFixed(2))" />
+          <FeeRow label="dependantsFee" :value="'ETB ' + ((fees.dependantsFee || 0).toFixed(2))" />
+          <FeeRow label="penaltyFee" :value="'ETB ' + ((fees.penaltyFee || 0).toFixed(2))" />
+          <FeeRow label="otherFee" :value="'ETB ' + ((fees.otherFee || 0).toFixed(2))" />
 
           <hr class="my-4 border-gray-200" />
 
@@ -130,13 +190,15 @@ const goToPayment = () => {
     </main>
   </div>
 </template>
-
-
 <style>
 .gn-primary {
   background-color: #6C9448;
 }
 .text-primary {
   color: #00FF00;
+}
+.colororange{
+  color: #f79120
+
 }
 </style>
