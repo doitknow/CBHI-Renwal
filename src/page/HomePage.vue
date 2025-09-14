@@ -77,14 +77,9 @@
   </div>
 </template>
 <script setup>
-<<<<<<< HEAD
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { SearchApi } from "../api/searchIdBy";
-=======
-import { ref } from "vue";
->>>>>>> 36e413876368adf47a36eff73bc785bc2745f846
 import { useRouter } from "vue-router";
-import { SearchApi } from "../api/searchIdBy";
 import { translations, lang, setLang } from "../i18n.js";
 
 const router = useRouter();
