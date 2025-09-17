@@ -1,3 +1,66 @@
+
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { translations, lang, setLang } from "../i18n.js";
+import {SearchApi} from "../api/searchIdBy.js"
+
+import { useUserStore } from "../store/userStore.js";
+
+const router = useRouter();
+const userStore=useUserStore();
+const searchId = ref("");
+const isDropdownOpen = ref(false);
+
+const selectedLang = ref(lang.value.toUpperCase());
+
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value;
+};
+const logos = [
+  { src: "/Green-Logo.png", alt: "partner logo" },
+  { src: "/cbe.png", alt: "partner logo" },
+  { src: "/mpesas.png", alt: "partner logo" },
+  { src: "/telebirr.png", alt: "partner logo" },
+  { src: "/BankofAbyssinia.png", alt: "partner logo" },
+  { src: "/anbessabank.png", alt: "partner logo" },
+  { src: "/Chapa.png", alt: "partner logo" },
+];
+
+const setLangHandler = (l) => {
+  setLang(l);
+  selectedLang.value = l.toUpperCase();
+  isDropdownOpen.value = false;
+};
+
+const searchUser = async () => {
+  if (!searchId.value) {
+    alert("Please enter CBHI ID");
+    return;
+  }
+  try {
+    const result = await SearchApi.searchUserById(searchId.value);
+    const user = result.user;
+    console.log(user)
+    userStore.setUser(user)
+
+      if (user.phoneNumber == null) {
+  const phone = '976304775';
+  userStore.setPhoneNumber(phone);
+}
+
+    const name = encodeURIComponent(user.firstName + " " + user.fathersName + " " + user.grandFathersName);
+    router.push(`/renewal/${user.id}/${name}`);
+  } catch (err) {
+    alert(err.message + " Something went wrong");
+  }
+};
+
+const t = (key) => {
+  return translations[lang.value]?.[key] || translations.en[key] || key;
+};
+</script>
+
 <template>
   <div class="min-h-screen flex flex-col items-center justify-start bg-white">
     <!-- Top Bar -->
@@ -128,55 +191,7 @@
     </div>
   </div>
 </template>
-<script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { translations, lang, setLang } from "../i18n.js";
 
-const router = useRouter();
-const searchId = ref("");
-const isDropdownOpen = ref(false);
-
-const selectedLang = ref(lang.value.toUpperCase());
-
-const toggleDropdown = () => {
-  isDropdownOpen.value = !isDropdownOpen.value;
-};
-const logos = [
-  { src: "/Green-Logo.png", alt: "partner logo" },
-  { src: "/cbe.png", alt: "partner logo" },
-  { src: "/mpesas.png", alt: "partner logo" },
-  { src: "/telebirr.png", alt: "partner logo" },
-  { src: "/BankofAbyssinia.png", alt: "partner logo" },
-  { src: "/anbessabank.png", alt: "partner logo" },
-  { src: "/Chapa.png", alt: "partner logo" },
-];
-
-const setLangHandler = (l) => {
-  setLang(l);
-  selectedLang.value = l.toUpperCase();
-  isDropdownOpen.value = false;
-};
-
-const searchUser = async () => {
-  if (!searchId.value) {
-    alert("Please enter CBHI ID");
-    return;
-  }
-  try {
-    const result = await SearchApi.searchUserById(searchId.value);
-    const user = result.user;
-    const name = encodeURIComponent(user.firstName + " " + user.fathersName + " " + user.grandFathersName);
-    router.push(`/renewal/${user.id}/${name}`);
-  } catch (err) {
-    alert(err.message + " Something went wrong");
-  }
-};
-
-const t = (key) => {
-  return translations[lang.value]?.[key] || translations.en[key] || key;
-};
-</script>
 
 <style>
 body {

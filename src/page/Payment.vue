@@ -9,53 +9,6 @@
       </div>
     </header>
 
-    <!-- Dropdown Lang Button -->
-    <div class="absolute top-4 right-4">
-      <div class="relative inline-block text-left">
-        <button 
-          @click="toggleDropdown" 
-          class="colororange text-black px-4 py-1 shadow font-semibold hover:bg-lime-500 transition flex items-center space-x-2"
-        >
-          <!-- Globe Icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" 
-               class="h-5 w-5 text-current"
-               fill="none" 
-               viewBox="0 0 24 24" 
-               stroke="currentColor"
-               stroke-width="2">
-            <path stroke-linecap="round" 
-                  stroke-linejoin="round" 
-                  d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9z" />
-            <path stroke-linecap="round" 
-                  stroke-linejoin="round" 
-                  d="M2.05 12h19.9M12 2.05a15.91 15.91 0 010 19.9M12 2.05a15.91 15.91 0 000 19.9" />
-          </svg>
-
-          <span>{{ selectedLang }}</span>
-
-          <!-- Dropdown Icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" 
-               class="h-4 w-4 text-current transition-transform duration-200"
-               :class="{ 'rotate-180': isDropdownOpen }"
-               fill="none" 
-               viewBox="0 0 24 24" 
-               stroke="currentColor">
-            <path stroke-linecap="round" 
-                  stroke-linejoin="round" 
-                  stroke-width="2" 
-                  d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-
-        <!-- Dropdown Menu -->
-        <div v-if="isDropdownOpen" class="absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg z-20">
-          <button @click="setLangHandler('en')" class="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100">ENG</button>
-          <button @click="setLangHandler('አማ')" class="block w-full text-left px-4 py-2 text-green-600 hover:bg-gray-100">አማ</button>
-          <button @click="setLangHandler('oro')" class="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100">ORO</button>
-        </div>
-      </div>
-    </div>
-
     <!-- Content -->
     <main class="container mx-auto px-9 py-15">
       <h2 class="text-2xl font-bold text-primary mb-6">{{ t("completePayment") }}</h2>
@@ -95,36 +48,11 @@
           </button>
         </div>
       </div>
-
-      <!-- Select Payment Method Title -->
-      <h3 class="text-lg font-semibold text-yellow-700 mb-4 text-center">
-        {{ t("selectPaymentMethod") }}
-      </h3>
-
-      <!-- Payment Options -->
-      <div class="flex justify-center mb-10">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <button
-            class="bg-white rounded-xl shadow p-3 flex flex-col items-center hover:bg-lime-100 transition border-2 border-green-400 animate-card w-72 md:w-96"
-            @click="goToChapa"
-          >
-            <img src="/Chapa.png" alt="Chapa" class="w-35 h-20 mb-2" />
-            <p class="text-gray-500 text-xs mt-1">{{ t("payWithChapa") }}</p>
-          </button>
-          <button
-            class="bg-white rounded-xl shadow p-3 flex flex-col items-center hover:bg-blue-100 transition border-2 border-blue-400 animate-card w-72 md:w-96"
-            @click="alert(t('payWithSiinqee'))"
-          >
-            <img src="/Green-Logo.png" alt="Siinqee" class="w-30 h-20 mb-2" />
-            <p class="text-gray-500 text-xs mt-1">{{ t("payWithSiinqee") }}</p>
-          </button>
-        </div>
-      </div>
     </main>
 
     <!-- ✅ Popup Verification -->
     <div v-if="showVerification" class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-      <Verification @close="showVerification = false" />
+      <Verification @close="showVerification = false" :phone="phone" />
     </div>
   </div>
 </template>
@@ -133,62 +61,43 @@
 import { ref } from "vue";
 import { lang, setLang, t } from "../i18n.js";
 import Verification from "./verification.vue";
+import { useUserStore } from "../store/userStore.js";
+import { LoginApi } from "../api/sendOtp.js";
+
+const userStore = useUserStore();
 
 const accountNumber = ref("");
-const accountName = ref("");
-const selectedLang = ref(lang.value.toUpperCase());
-const isDropdownOpen = ref(false);
-const showVerification = ref(false);
+
 const accountError = ref("");
-
-const toggleDropdown = () => {
-  isDropdownOpen.value = !isDropdownOpen.value;
-};
-
-const setLangHandler = (l) => {
-  setLang(l);
-  selectedLang.value = l.toUpperCase();
-  isDropdownOpen.value = false;
-};
-
-const goToChapa = () => {
-  alert(t("payWithChapa"));
-};
-
-const handlePayNow = () => {
-  // Only allow numbers and at least 6 digits
+const showVerification = ref(false);
+userStore.setAccountNumber(accountNumber); 
+const phone = userStore.phoneNumber; // 📌 stored in Pinia
+console.log(phone)
+const handlePayNow = async () => {
   if (!/^\d{13}$/.test(accountNumber.value)) {
     accountError.value = "Account number must be 13 digits and numeric.";
     return;
   }
   accountError.value = "";
-  showVerification.value = true;
+
+  // ✅ Request OTP from backend
+  const success = await LoginApi.requestOtp({ phoneNumber: phone });
+  if (success) {
+    showVerification.value = true;
+  } else {
+    alert("Failed to send OTP. Try again.");
+  }
 };
 </script>
-<style >
-@keyframes card {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-.animate-card {
-  animation: card 3s ease-in-out infinite;
-}
+
+<style>
 .bg-primary {
   background-color: #6C9448;
 }
 .text-primary {
   color: #f79120;
-  
 }
-.colororange{
-  color: #f79120
-
+.colororange {
+  color: #f79120;
 }
 </style>

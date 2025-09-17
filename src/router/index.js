@@ -3,6 +3,9 @@ import HomePage from "../page/HomePage.vue";          // your main search page
 import RenewalAmount from "../page/Renewal.vue";      // your Renewal component
 import Payment from "../page/Payment.vue";
 import Verification from "../page/verification.vue";
+import PaymentSucess from "../page/PaymentSucess..vue";
+import PaymentInitate from "../page/PaymentInitate.vue";
+import PaymentFailure from "../page/PaymentFailure.vue";
 
 const routes = [
   {
@@ -24,7 +27,18 @@ const routes = [
     path: "/verify",
     name: "verification",
     component: Verification
-  }
+  },
+  {
+    path:"/success",
+    name:"paymentSuccess",
+    component:PaymentSucess
+  },
+  {
+    path:'/payment/initate',
+    name:"paymentInitation",
+    component:PaymentInitate
+  },
+  { path: "/payment/failure", name: "PaymentFailure", component: PaymentFailure }
 ];
 
 const router = createRouter({

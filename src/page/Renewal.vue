@@ -4,10 +4,11 @@ import { useRoute, useRouter } from "vue-router";
 import FeeRow from "../components/FeeRow.vue";
 import { InstallmentSummary } from "../api/installmentSummary";
 import { lang, setLang, translations } from "../i18n.js";
+import { useUserStore } from "../store/userStore.js";
 
 const route = useRoute();
 const router = useRouter();
-
+const userStore=useUserStore();
 const fees = ref({
   registrationFee: 0,
   insuredFee: 0,
@@ -21,13 +22,17 @@ const user = ref({ id: null, fullName: null });
 const installmentsTotal = computed(() => {
   const f = fees.value;
   return (
-    (Number(f.registrationFee) || 0) +
+    (Number(f.registrationFee) || 545) +
     (Number(f.insuredFee) || 0) +
     (Number(f.dependantsFee) || 0) +
     (Number(f.penaltyFee) || 0) +
     (Number(f.otherFee) || 0)
   );
 });
+userStore.setAmount(installmentsTotal.value);
+
+console.log(installmentsTotal.value);
+
 
 // ✅ Language state
 const selectedLang = ref(lang.value.toUpperCase());
@@ -43,6 +48,10 @@ const setLangHandler = (l) => {
   isDropdownOpen.value = false;
 };
 
+
+
+
+
 // ✅ Translation helper
 const t = (key) => {
   return translations[lang.value]?.[key] || translations.en[key] || key;
@@ -55,7 +64,7 @@ const fetchUserData = async (userId) => {
     user.value.id = userId;
     const result = await InstallmentSummary.getInstallments(userId);
     fees.value = {
-      registrationFee: Number(result.registrationFee) || 0,
+      registrationFee: Number(result.registrationFee) || 545,
       insuredFee: Number(result.insuredFee) || 0,
       dependantsFee: Number(result.dependantsFee) || 0,
       penaltyFee: Number(result.penaltyFee) || 0,
