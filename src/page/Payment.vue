@@ -1,4 +1,5 @@
 <template>
+
   <div class="min-h-screen bg-gray-100 relative">
     <!-- Navbar -->
     <header class="bg-primary text-white shadow-md">
@@ -95,6 +96,9 @@
           </button>
         </div>
       </div>
+      
+<!-- after get the backend access uncomment this line 
+      <Verification :accountNumber="accountNumber" @close="showVerification = false" /> -->
 
       <!-- Select Payment Method Title -->
       <h3 class="text-lg font-semibold text-yellow-700 mb-4 text-center">
@@ -164,6 +168,29 @@ const handlePayNow = () => {
   accountError.value = "";
   showVerification.value = true;
 };
+
+// uncomment this scrip after get the backend get
+// import axios from "axios";
+
+// const handlePayNow = async () => {
+//   if (!/^\d{13}$/.test(accountNumber.value)) {
+//     accountError.value = "Account number must be 13 digits and numeric.";
+//     return;
+//   }
+//   accountError.value = "";
+
+//   try {
+//     const res = await axios.post("http://localhost:8080/api/payment/initiate", {
+//       accountNumber: accountNumber.value,
+//     });
+
+//     console.log(res.data.message);
+//     showVerification.value = true;
+//   } catch (err) {
+//     accountError.value = err.response?.data?.message || "Something went wrong";
+//   }
+// };
+
 </script>
 <style >
 @keyframes card {

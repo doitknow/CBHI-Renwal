@@ -72,6 +72,33 @@ const verifyCode = () => {
   alert(`${t("codeEntered")} ${enteredCode}`);
   emit("close"); // close after verification
 };
+// this part is un comment after the backend access getted
+// import { ref } from "vue";
+// import axios from "axios";
+// import { t } from "../i18n.js";
+
+// const props = defineProps({
+//   accountNumber: String,
+// });
+
+// const emit = defineEmits(["close"]);
+// const code = ref(["", "", "", "", "", ""]);
+
+// const verifyCode = async () => {
+//   const enteredCode = code.value.join("");
+//   try {
+//     const res = await axios.post("http://localhost:8080/api/payment/verify", {
+//       accountNumber: props.accountNumber,
+//       code: enteredCode,
+//     });
+//     alert(res.data.message);
+//     emit("close");
+//   } catch (err) {
+//     alert(err.response?.data?.message || "Verification failed");
+//   }
+// };
+
+
 </script>
 
 <style scoped>  
