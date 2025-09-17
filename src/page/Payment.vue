@@ -1,4 +1,5 @@
 <template>
+
   <div class="min-h-screen bg-gray-100 relative">
     <!-- Navbar -->
     <header class="bg-primary text-white shadow-md">
@@ -48,6 +49,34 @@
           </button>
         </div>
       </div>
+      
+<!-- after get the backend access uncomment this line 
+      <Verification :accountNumber="accountNumber" @close="showVerification = false" /> -->
+
+      <!-- Select Payment Method Title -->
+      <h3 class="text-lg font-semibold text-yellow-700 mb-4 text-center">
+        {{ t("selectPaymentMethod") }}
+      </h3>
+
+      <!-- Payment Options -->
+      <div class="flex justify-center mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <button
+            class="bg-white rounded-xl shadow p-3 flex flex-col items-center hover:bg-lime-100 transition border-2 border-green-400 animate-card w-72 md:w-96"
+            @click="goToChapa"
+          >
+            <img src="/Chapa.png" alt="Chapa" class="w-35 h-20 mb-2" />
+            <p class="text-gray-500 text-xs mt-1">{{ t("payWithChapa") }}</p>
+          </button>
+          <button
+            class="bg-white rounded-xl shadow p-3 flex flex-col items-center hover:bg-blue-100 transition border-2 border-blue-400 animate-card w-72 md:w-96"
+            @click="alert(t('payWithSiinqee'))"
+          >
+            <img src="/Green-Logo.png" alt="Siinqee" class="w-30 h-20 mb-2" />
+            <p class="text-gray-500 text-xs mt-1">{{ t("payWithSiinqee") }}</p>
+          </button>
+        </div>
+      </div>
     </main>
 
     <!-- ✅ Popup Verification -->
@@ -79,15 +108,31 @@ const handlePayNow = async () => {
     return;
   }
   accountError.value = "";
-
-  // ✅ Request OTP from backend
-  const success = await LoginApi.requestOtp({ phoneNumber: phone });
-  if (success) {
-    showVerification.value = true;
-  } else {
-    alert("Failed to send OTP. Try again.");
-  }
+  showVerification.value = true;
 };
+
+// uncomment this scrip after get the backend get
+// import axios from "axios";
+
+// const handlePayNow = async () => {
+//   if (!/^\d{13}$/.test(accountNumber.value)) {
+//     accountError.value = "Account number must be 13 digits and numeric.";
+//     return;
+//   }
+//   accountError.value = "";
+
+//   try {
+//     const res = await axios.post("http://localhost:8080/api/payment/initiate", {
+//       accountNumber: accountNumber.value,
+//     });
+
+//     console.log(res.data.message);
+//     showVerification.value = true;
+//   } catch (err) {
+//     accountError.value = err.response?.data?.message || "Something went wrong";
+//   }
+// };
+
 </script>
 
 <style>

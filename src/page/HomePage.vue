@@ -69,7 +69,8 @@ const t = (key) => {
         <span>{{ t("hours") }}</span>
       </div>
       <div class="flex items-center space-x-3 text-sm md:text-base">
-        <span>{{ t("phone") }}</span>
+        <span class="colors-blue-400">📞</span>
+        <span class="color-blue-400">{{ t("phone") }}</span>
         <span class="hidden md:inline-block">| {{ t("Ethiopia") }}</span>
       </div>
     </div>
@@ -225,6 +226,9 @@ body {
 }
 .colororange{
   color: #f79120
-
 }
+.color-blue-400{
+  color: #3b82f6;
+}
+
 </style>
