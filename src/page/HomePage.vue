@@ -132,7 +132,6 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { SearchApi } from "../api/searchIdBy";
 import { translations, lang, setLang } from "../i18n.js";
 
 const router = useRouter();
