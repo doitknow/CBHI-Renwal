@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-6">
     <!-- Success Icon -->
-    <div class="bg-green-100 rounded-full p-6 mb-6">
+    <div class=".bg-green rounded-full p-6 mb-6">
       <svg
         class="h-16 w-16 text-green-600"
         fill="none"
@@ -54,8 +54,11 @@ const goHome = () => {
 
 <style>
 /* Small success pulse animation */
-.bg-green-100 {
+/* .bg-green-100 {
   animation: pulse 1.5s infinite;
+} */
+.bg-green {
+  color: #6C9448;
 }
 
 @keyframes pulse {

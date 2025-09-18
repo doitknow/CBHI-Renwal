@@ -8,6 +8,66 @@
           <img src="/cbhirenew.png" alt="Arrow" class="mx-auto h-8" />
         </h1>
       </div>
+      <!-- Dropdown Lang Button -->
+      <div class="absolute top-4 right-4">
+  <div class="relative inline-block text-left">
+    <button 
+      @click="toggleDropdown" 
+      class="colororange text-black px-4 py-1 shadow font-semibold hover:bg-lime-500 transition flex items-center space-x-2"
+    >
+      <!-- Language (Globe) Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" 
+           class="h-5 w-5 text-current"
+           fill="none" 
+           viewBox="0 0 24 24" 
+           stroke="currentColor"
+           stroke-width="2">
+        <path stroke-linecap="round" 
+              stroke-linejoin="round" 
+              d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9z" />
+        <path stroke-linecap="round" 
+              stroke-linejoin="round" 
+              d="M2.05 12h19.9M12 2.05a15.91 15.91 0 010 19.9M12 2.05a15.91 15.91 0 000 19.9" />
+      </svg>
+
+      <span>{{ selectedLang }}</span>
+
+      <!-- Dropdown Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" 
+           class="h-4 w-4 text-current transition-transform duration-200"
+           :class="{ 'rotate-180': isDropdownOpen }"
+           fill="none" 
+           viewBox="0 0 24 24" 
+           stroke="currentColor">
+        <path stroke-linecap="round" 
+              stroke-linejoin="round" 
+              stroke-width="2" 
+              d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+
+    <!-- Dropdown Menu -->
+    <div 
+      v-if="isDropdownOpen" 
+      class="absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg z-20"
+    >
+      <button 
+        @click="setLangHandler('en')" 
+        class="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100"
+      >ENG</button>
+
+      <button 
+        @click="setLangHandler('አማ')" 
+        class="block w-full text-left px-4 py-2 text-green-600 hover:bg-gray-100"
+      >አማ</button>
+
+      <button 
+        @click="setLangHandler('oro')" 
+        class="block w-full text-left px-4 py-2 text-green-500 hover:bg-gray-100"
+      >ORO</button>
+    </div>
+  </div>
+</div>
     </header>
 
     <!-- Content -->
@@ -64,6 +124,7 @@
           <button
             class="bg-white rounded-xl shadow p-3 flex flex-col items-center hover:bg-lime-100 transition border-2 border-green-400 animate-card w-72 md:w-96"
             @click="goToChapa"
+            
           >
             <img src="/Chapa.png" alt="Chapa" class="w-35 h-20 mb-2" />
             <p class="text-gray-500 text-xs mt-1">{{ t("payWithChapa") }}</p>
@@ -96,9 +157,9 @@ import { LoginApi } from "../api/sendOtp.js";
 const userStore = useUserStore();
 
 const accountNumber = ref("");
-
 const accountError = ref("");
 const showVerification = ref(false);
+<<<<<<< HEAD
 userStore.setAccountNumber(accountNumber); 
 const phone = userStore.phoneNumber ?? '976304775';
 
@@ -124,25 +185,52 @@ const handlePayNow = async () => {
 // uncomment this scrip after get the backend get
 // import axios from "axios";
 
+=======
+userStore.setAccountNumber(accountNumber);
+const isDropdownOpen = ref(false); 
+const phone = userStore.phoneNumber; // 📌 stored in Pinia
+console.log(phone)
+>>>>>>> d9d4d1a ( all)
 // const handlePayNow = async () => {
 //   if (!/^\d{13}$/.test(accountNumber.value)) {
 //     accountError.value = "Account number must be 13 digits and numeric.";
 //     return;
 //   }
+//   // const res = await LoginApi.sendOtp(phone);
 //   accountError.value = "";
-
-//   try {
-//     const res = await axios.post("http://localhost:8080/api/payment/initiate", {
-//       accountNumber: accountNumber.value,
-//     });
-
-//     console.log(res.data.message);
-//     showVerification.value = true;
-//   } catch (err) {
-//     accountError.value = err.response?.data?.message || "Something went wrong";
-//   }
+//   showVerification.value = true;
 // };
 
+
+import axios from "axios";
+
+const handlePayNow = async () => {
+  if (!/^\d{13}$/.test(accountNumber.value)) {
+    accountError.value = "Account number must be 13 digits and numeric.";
+    return;
+  }
+  if (!phone) {
+    accountError.value = "Failed to send OTP: phone number not Found.";
+    return;
+  }
+  try {
+    const res = await LoginApi.sendOtp(phone);
+    accountError.value = "";
+    showVerification.value = true;
+  } catch (err) {
+    accountError.value = "Failed to send OTP.";
+  }
+};
+// language dropdown
+const selectedLang = ref(lang.value.toUpperCase());
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value;
+};
+const setLangHandler = (l) => {
+  setLang(l);
+  selectedLang.value = l.toUpperCase();
+  isDropdownOpen.value = false;
+};
 </script>
 
 <style>

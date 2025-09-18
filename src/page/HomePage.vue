@@ -72,7 +72,7 @@ const t = (key) => {
         <span>{{ t("hours") }}</span>
       </div>
       <div class="flex items-center space-x-3 text-sm md:text-base">
-        <span class="colors-blue-400">📞</span>
+       
         <span class="color-blue-400">{{ t("phone") }}</span>
         <span class="hidden md:inline-block">| {{ t("Ethiopia") }}</span>
       </div>

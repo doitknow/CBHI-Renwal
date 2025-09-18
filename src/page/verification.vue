@@ -1,6 +1,6 @@
 <template>
-  <div class="fixed inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm z-50">
-    <div class="bg-white/5 backdrop-blur-xl text-white p-8 rounded-2xl w-full max-w-sm text-center shadow-2xl border border-white/20">
+  <div class="fixed inset-0 flex items-center justify-center bg-black/45  z-50">
+    <div class="bg-black/25 backdrop-blur-sm text-white p-8 rounded-2xl w-full max-w-sm text-center shadow-2xl border border-white/20">
       <div class="mb-4">
         <img src="/cbhirenew.png" alt="Verification Icon" class="mx-auto w-20 h-16" />
       </div>

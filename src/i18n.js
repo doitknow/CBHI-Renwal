@@ -1,5 +1,6 @@
 // src/i18n.js
 import { ref } from "vue";
+import { useUserStore } from "./store/userStore.js";
 
 const saved = typeof localStorage !== "undefined" ? localStorage.getItem("lang") : null;
 export const lang = ref(saved || "en");
@@ -8,6 +9,17 @@ export const setLang = (l) => {
   lang.value = l;
   if (typeof localStorage !== "undefined") {
     localStorage.setItem("lang", l);
+  }
+};
+// computed phone masking function
+export const getMaskedPhone = () => {
+  try {
+    const store = useUserStore(); // only works inside Vue component context
+    const number = store.phoneNumber || "";
+    return number.length >= 4 ? "******" + number.slice(-4) : number;
+  } catch (err) {
+    // fallback if Pinia store is not ready yet
+    return "******1958";
   }
 };
 
@@ -46,7 +58,7 @@ export const translations = {
     AMH: "Amharic",
     COMMUNITY_BASED_HEALTH_INSURANCE: "COMMUNITY BASED HEALTH INSURANCE",
     verificationCode: "Verification Code",
-    enterCodeMsg: "Enter the 6-digit code we've sent to ******1958",
+    enterCodeMsg: () => `Enter the 4-digit code we've sent to ${getMaskedPhone()}`,
     noCode: "Didn’t get the code?",
     resendCode: "Click to resend",
     resendCodeAlert: "Verification code resent!",
@@ -88,7 +100,7 @@ export const translations = {
     Ethiopia: "ኢትዮጵያ",
     COMMUNITY_BASED_HEALTH_INSURANCE: "ማህበረሰብ አቀፍ የጤና መድን",
     verificationCode: "የማረጋገጫ ኮድ",
-    enterCodeMsg: "ወደ ******1958 የተላከውን 6-አሃዝ ኮድ ያስገቡ",
+    enterCodeMsg: () => `ወደ ${getMaskedPhone()} የተላከውን 4-አሃዝ ኮድ ያስገቡ`,
     noCode: "ኮዱን አላገኙም?",
     resendCode: "ደግመው ይላኩ",
     resendCodeAlert: "የማረጋገጫ ኮድ ተልኳል!",
@@ -132,7 +144,7 @@ export const translations = {
   Ethiopia: "Itoophiyaa",
   COMMUNITY_BASED_HEALTH_INSURANCE: "Tajaajila Inshuraansii Fayyaa Hawaasummaa (CBHI)",
    verificationCode: "Koodii Mirkaneessaa",
-    enterCodeMsg: "Koodii lakkoofsa 6 ta’e gara ******1958’n ergame galchi",
+    enterCodeMsg: () => `Koodii lakkoofsa 4 ta’e gara ${getMaskedPhone()}’n ergame galchi`,
     noCode: "Koodiin hin dhufne?",
     resendCode: "Irra deebi'ii ergi",
     resendCodeAlert: "Koodiin mirkaneessaa ergame!",
@@ -146,5 +158,6 @@ export const translations = {
 
 // ✅ Helper function
 export const t = (key) => {
-  return translations[lang.value]?.[key] || translations.en[key] || key;
+  const value = translations[lang.value]?.[key] || translations.en[key] || key;
+  return typeof value === "function" ? value() : value;
 };

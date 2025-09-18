@@ -38,7 +38,9 @@ const routes = [
     name:"paymentInitation",
     component:PaymentInitate
   },
-  { path: "/payment/failure", name: "PaymentFailure", component: PaymentFailure }
+  { path: "/payment/failure", 
+    name: "PaymentFailure", 
+    component: PaymentFailure }
 ];
 
 const router = createRouter({
