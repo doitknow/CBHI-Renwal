@@ -4,7 +4,7 @@ const BASE_URL = "http://localhost:3011/api/payment";
 
 export const initiatePayment = async (userId,payload) => {
   // replace with your backend base URL if needed
-  const response = await axios.post(`http://cfbt.kenemapharmacy.com/api/payment/initiate/${userId}`, payload);
+  const response = await axios.post(`${BASE_URL}/initiate/${userId}`, payload);
   return response.data;
 };
 

@@ -44,9 +44,12 @@ const searchUser = async () => {
     console.log(user)
     userStore.setUser(user)
 
-      if (user.phoneNumber == null) {
+      if (user.phoneNumber == "") {
   const phone = '976304775';
   userStore.setPhoneNumber(phone);
+}
+else{
+  userStore.setPhoneNumber(user.phoneNumber)
 }
 
     const name = encodeURIComponent(user.firstName + " " + user.fathersName + " " + user.grandFathersName);

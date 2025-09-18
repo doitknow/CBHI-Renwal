@@ -81,7 +81,7 @@
 
     <!-- ✅ Popup Verification -->
     <div v-if="showVerification" class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-      <Verification @close="showVerification = false" :phone="phone" />
+      <Verification @close="showVerification = false" :phone= phone />
     </div>
   </div>
 </template>
@@ -100,15 +100,25 @@ const accountNumber = ref("");
 const accountError = ref("");
 const showVerification = ref(false);
 userStore.setAccountNumber(accountNumber); 
-const phone = userStore.phoneNumber; // 📌 stored in Pinia
-console.log(phone)
+const phone = userStore.phoneNumber ?? '976304775';
+
+console.log(phone);
+
 const handlePayNow = async () => {
   if (!/^\d{13}$/.test(accountNumber.value)) {
     accountError.value = "Account number must be 13 digits and numeric.";
     return;
   }
+
   accountError.value = "";
-  showVerification.value = true;
+
+  // 🔑 Trigger OTP request here
+  const success = await LoginApi.requestOtp({ phoneNumber: phone });
+  if (success) {
+    showVerification.value = true;
+  } else {
+    accountError.value = "Failed to send OTP. Try again.";
+  }
 };
 
 // uncomment this scrip after get the backend get

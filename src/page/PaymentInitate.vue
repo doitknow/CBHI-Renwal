@@ -63,36 +63,49 @@ import { ref } from "vue";
 import { initiatePayment } from "../api/sendAmountWithAccnumber.js";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../store/userStore.js";
+import { toRaw } from "vue";
 
-const router = useRouter();
-const showConfirm = ref(false);
+const router = useRouter(); 
+const showConfirm = ref(false); 
 const userStore = useUserStore();
-const userId = 'f5c18f95-faa1-4fef-89fe-87d57f452738'
-const confirmPayment = () => {
-  userStore.amount=2000;
-  userStore.accountNumber='1000034567894'
-    if (!userStore.amount || !userStore.accountNumber) return;
-  showConfirm.value = true;
-};
+ const userId = userStore.user.id; 
+ console.log(userId);
+ const confirmPayment = () =>
+  { if (!userStore.amount || !userStore.accountNumber)
+     return;
+      showConfirm.value = true; };
 const initiate = async () => {
   try {
-    const payload = {
-      amount: userStore.amount|| 100,
-      accountNumber: userStore.accountNumber||'1000034567894'
+     const payload = {
+      amount: userStore.amount || 100,
+      accountNumber: userStore.accountNumber?.value || "1000034567894",
     };
-    const response = await initiatePayment(userId,payload);
- console.log("Payment response:", response);
+
+    const userId = toRaw(userStore.user?.id); // ensure raw value
+    console.log("UserId:", userId, "Payload:", payload);
+
+    const response = await initiatePayment(userId, payload);
+
+    console.log("Payment response:", response);
+
     router.push({
       name: "paymentSuccess",
       query: {
         psr: response.psr,
-        amount: userStore.amount,
-        accountNumber: userStore.accountNumber
-      }
+        amount: payload.amount,
+        accountNumber: payload.accountNumber,
+      },
     });
   } catch (e) {
+    if (e.response) {
+      console.error("Payment initiation failed:", e.response.data);
+    } else {
+      console.error("Payment initiation failed:", e.message);
+    }
     router.push({ name: "PaymentFailure" });
   }
 };
+
+
 
 </script>

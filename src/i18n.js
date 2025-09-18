@@ -15,10 +15,10 @@ export const setLang = (l) => {
 export const translations = {
   en: {
     hours: "🕒 | Monday - Sunday, 24/7",
-    phone: "📞 (+251 901525354)",
+    phone: " (+251 901525354)",
     cbhi: "CBHI",
     cbhiFull: "COMMUNITY BASED HEALTH INSURANCE",
-    cbhiDesc: "Your gateway to secure, simplified, and inclusive health insurance services in Addis Ababa",
+    cbhiDesc: "Your gateway to secure, simplified, and inclusive health insurance services in Ethiopia",
     searchPlaceholder: "Search by CBHI ID to renew your membership",
     searchBtn: "Search",
 
@@ -56,7 +56,7 @@ export const translations = {
   },
   አማ: {
     hours: "🕒 | ሰኞ - እሑድ፣ 24/7",
-    phone: "📞 (+251 901525354)",
+    phone: " (+251 901525354)",
     cbhi: "ማህበረሰብ ተደጋጋሚ ጤና ኢንሹራንስ",
     cbhiFull: "Community Based Health Insurance",
     cbhiDesc: "በአዲስ አበባ የሚገኝ ቀላል እና ማህበረሰብ የተመሰረተ ጤና ኢንሹራንስ",
@@ -98,7 +98,7 @@ export const translations = {
   },
   oro: {
   hours: "🕒 | Wiixata - Dilbata, 24/7",
-  phone: "📞 (+251 901525354)",
+  phone: " (+251 901525354)",
   cbhi: "Tajaajila Fayyaa Hawaasaa (CBHI)",
   cbhiFull: "Community Based Health Insurance",
   cbhiDesc: "Balbala keessan fayyaa eegumsa, salphaa fi hirmaachisaa ta’eef Finfinnee keessatti",

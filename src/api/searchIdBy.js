@@ -7,7 +7,7 @@ if (!TOKEN) {
   console.warn("⚠️ VITE_ACCESS_TOKEN is not defined in your .env file!");
 }
 
-const BASE_URL = "https://cfbt.kenemapharmacy.com/api/v1/insured";
+const BASE_URL = "http://localhost:3011/api/v1/insured";
 
 const headers = {
   Authorization: `Bearer ${TOKEN}`,
